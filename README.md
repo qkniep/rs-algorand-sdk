@@ -3,6 +3,9 @@
 # rs-algorand-sdk
 
 A Rust library for interacting with Algorand nodes.
+This library includes:
+* HTTP clients for the algod (agreement) and kmd (key management) APIs
+* Standalone functionality for interacting with the Algorand protocol, including transaction signing, message encoding, etc.
 
 [![Build Status](https://img.shields.io/circleci/build/github/qkniep/rs-algorand-sdk/main?token=86739a8e33bf4ab2812b9771d04a7585fa90f80c&style=for-the-badge&logo=circleci)](https://app.circleci.com/pipelines/github/qkniep/rs-algorand-sdk)
 [![Test Coverage](https://img.shields.io/codecov/c/github/qkniep/rs-algorand-sdk?label=test%20coverage&logo=codecov&style=for-the-badge)](https://codecov.io/gh/qkniep/rs-algorand-sdk)

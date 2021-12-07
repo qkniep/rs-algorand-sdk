@@ -11,3 +11,5 @@ keywords = ["algorand", "cryptocurrency", "blockchain", "sdk"]
 categories = ["api-bindings"]
 
 [dependencies]
+lazy_static = "1"
+sha2 = "0.10"
