@@ -1,0 +1,13 @@
+[package]
+name = "rs-algorand-sdk"
+version = "0.1.0"
+authors = ["Quentin M. Kniep <hello@quentinkniep.com>"]
+edition = "2021"
+description = "Algorand Rust SDK"
+homepage = "https://github.com/qkniep/rs-algorand-sdk"
+repository = "https://github.com/qkniep/rs-algorand-sdk"
+license = "MIT"
+keywords = ["algorand", "cryptocurrency", "blockchain", "sdk"]
+categories = ["api-bindings"]
+
+[dependencies]
