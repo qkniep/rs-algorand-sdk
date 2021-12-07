@@ -11,5 +11,11 @@ keywords = ["algorand", "cryptocurrency", "blockchain", "sdk"]
 categories = ["api-bindings"]
 
 [dependencies]
+data-encoding = "2"
 lazy_static = "1"
+reqwest = "0.11"
 sha2 = "0.10"
+thiserror = "1"
+
+[dev-dependencies]
+rand = "0.8"
