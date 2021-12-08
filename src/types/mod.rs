@@ -4,6 +4,7 @@
 mod address;
 mod applications;
 mod asset;
+mod auction;
 mod basics;
 mod block;
 mod signature;
@@ -12,6 +13,7 @@ mod transaction;
 pub use address::{Address, AddressError};
 pub use applications::{AppCallFields, AppIndex, OnCompletion};
 pub use asset::{AssetIndex, AssetParams};
+pub use auction::Bid;
 pub use basics::{Digest, MicroAlgos, Round, VotePK, VrfPK};
 pub use block::{Block, BlockHeader, UpgradeState, UpgradeVote};
 pub use signature::{LogicSig, MultisigSignature, MultisigSubsig, Signature};

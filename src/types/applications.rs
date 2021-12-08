@@ -54,6 +54,7 @@ pub struct AppCallFields {
 
 /// Represents some layer 1 side effect that an `ApplicationCall` transaction will have if it is included in a block.
 #[derive(Clone, PartialEq, Eq, Serialize, Deserialize)]
+// TODO serialize as int https://serde.rs/enum-number.html
 pub enum OnCompletion {
     /// NoOpOC indicates that an application transaction will simply call its ApprovalProgram.
     NoOpOC,

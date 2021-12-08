@@ -1,6 +1,8 @@
 // Copyright (C) 2021 Quentin M. Kniep <hello@quentinkniep.com>
 // Distributed under terms of the MIT license.
 
+use std::str::FromStr;
+
 use serde::{Deserialize, Serialize};
 
 use super::*;
@@ -188,4 +190,62 @@ struct TxGroup {
     /// Each hash in the list is a hash of a transaction with the `group` field omitted.
     #[serde(rename = "txlist", default, skip_serializing_if = "is_default")]
     pub tx_group_hashes: Vec<Digest>,
+}
+
+/// Wraps transaction parameters common to all transactions,
+/// typically received from the SuggestedParams endpoint of algod.
+#[derive(Default, Serialize, Deserialize)]
+#[serde(rename_all = "kebab-case", default)]
+pub struct SuggestedParams {
+    /// Suggested transaction fee in `MicroAlgos / byte`.
+    /// This may fall to zero but a group of `n` atomic transactions must
+    /// still have a fee of at least `n*min_tx_fee` for the current network protocol.
+    #[serde(skip_serializing_if = "is_default")]
+    pub fee: MicroAlgos,
+
+    /// Genesis ID
+    #[serde(skip_serializing_if = "is_default")]
+    pub genesis_id: String,
+
+    /// Genesis hash
+    #[serde(skip_serializing_if = "is_default")]
+    pub genesis_hash: Vec<u8>,
+
+    /// First protocol round on which the tx is valid.
+    #[serde(skip_serializing_if = "is_default")]
+    pub first_round_valid: Round,
+
+    /// Final protocol round on which the tx may be committed.
+    #[serde(skip_serializing_if = "is_default")]
+    pub last_round_valid: Round,
+
+    /// ConsensusVersion indicates the consensus protocol version as of LastRound.
+    #[serde(skip_serializing_if = "is_default")]
+    pub consensus_version: String,
+
+    /// FlatFee indicates whether the passed fee is per-byte or per-transaction
+    /// If true, tx fee may fall below the `min_tx_fee` for the current network protocol.
+    #[serde(skip_serializing_if = "is_default")]
+    pub flat_fee: bool,
+
+    /// The minimum transaction fee (not per byte) required for the txn to validate for the current network protocol.
+    #[serde(skip_serializing_if = "is_default")]
+    pub min_fee: u64,
+}
+
+impl Transaction {
+    fn add_lease(&mut self, lease: &[u8; 32], fee_per_byte: u64) {
+        self.header.lease.copy_from_slice(lease);
+        self.header.fee = MicroAlgos(self.header.fee.0 + 37 * fee_per_byte);
+    }
+
+    fn add_lease_with_flat_fee(&mut self, lease: &[u8; 32], flat_fee: u64) {
+        self.header.lease.copy_from_slice(lease);
+        self.header.fee = MicroAlgos(flat_fee);
+    }
+
+    fn rekey(&mut self, addr: String) -> Result<(), AddressError> {
+        self.header.rekey_to = Address::from_str(&addr)?;
+        Ok(())
+    }
 }
