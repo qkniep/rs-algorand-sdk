@@ -3,3 +3,4 @@
 
 pub mod mnemonic;
 pub mod types;
+pub mod util;

@@ -5,6 +5,7 @@ use std::fmt;
 use std::str::FromStr;
 
 use data_encoding::BASE32_NOPAD;
+use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha512_256};
 use thiserror::Error;
 
@@ -21,7 +22,7 @@ pub enum AddressError {
     InvalidChecksum,
 }
 
-#[derive(Clone, Copy, Debug, Default, Hash, PartialEq, Eq)]
+#[derive(Clone, Copy, Debug, Default, Hash, PartialEq, Eq, Serialize, Deserialize)]
 pub struct Address(pub [u8; HASH_LEN]);
 
 impl Address {
